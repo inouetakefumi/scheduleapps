@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         String[] titles = { "2020/6/19", "2020/6/20", "2020/6/21", "2020/6/22", "2020/6/23" };
-        String[] tags = { "出社", "テレワーク", "休み", "テレワーク", "テレワーク" };
+        String[] tags = { "出社", "テレワーク", "休み", "テレワーク", "" };
         ArrayList<ListItem> data = new ArrayList<>();
         for (int i = 0; i < titles.length; i++) {
             ListItem item = new ListItem();

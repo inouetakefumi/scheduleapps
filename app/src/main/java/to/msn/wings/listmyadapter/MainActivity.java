@@ -7,25 +7,83 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.Random;
 
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
+import io.realm.RealmResults;
+
+import java.util.Date;
+import java.util.Calendar;
+
 public class MainActivity extends AppCompatActivity {
+
+    private Realm mRealm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        String[] titles = { "2020/6/19", "2020/6/20", "2020/6/21", "2020/6/22", "2020/6/23" };
-        String[] tags = { "出社", "テレワーク", "休み", "テレワーク", "" };
+        RealmConfiguration config = new RealmConfiguration.Builder()
+                .name("schedule.realm")
+                .schemaVersion(1)
+                .build();
+
+        mRealm.deleteRealm(config);
+
+        mRealm = Realm.getInstance(config);
+
+        //データを10日初期登録
+        try {
+            for(int i = 0;i<10;i++){
+                mRealm.executeTransaction(new RealmInitTransaction(i) {
+                });
+            }
+        }
+        catch (IllegalArgumentException e) {
+            // 不正な日付の場合の処理
+        }
+
         ArrayList<ListItem> data = new ArrayList<>();
-        for (int i = 0; i < titles.length; i++) {
-            ListItem item = new ListItem();
-            item.setId((new Random()).nextLong());
-            item.setTitle(titles[i]);
-            item.setTag(tags[i]);
-            data.add(item);
+        for (int i = 0; i < 10; i++) {
+            Schedule schedule = new Schedule();
+            schedule.getDate();
+            schedule.getWork();
+            data.add(schedule);
         }
         MyListAdapter adapter = new MyListAdapter(this, data, R.layout.list_item);
         ListView list = findViewById(R.id.list);
         list.setAdapter(adapter);
     }
+
+    class RealmInitTransaction implements Realm.Transaction {
+        int i =0;
+        RealmInitTransaction(int i){
+            this.i = i;
+        }
+        @Override
+        public void execute(Realm realm) {
+            Number max = realm.where(Schedule.class).max("id");
+            long newId = 0;
+            if(max != null) { // nullチェック
+                newId = max.longValue() + 1;
+            }
+            Schedule schedule
+                    = realm.createObject(Schedule.class, newId);
+
+            Calendar c = Calendar.getInstance();
+
+            //当日日付を取得
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day= c.get(Calendar.DATE);
+            //日付を
+            c.set(year, month , day+i);
+            Date d = c.getTime();
+            schedule.date = d;
+            schedule.name = "井上武史";
+
+        }
+    }
+
+
 }

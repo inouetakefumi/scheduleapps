@@ -44,7 +44,7 @@ public class Schedule extends RealmObject {
         this.work = work;
     }
 
-    public long getDetail() {
+    public String getDetail() {
         return detail;
     }
 

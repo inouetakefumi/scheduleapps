@@ -43,12 +43,10 @@ public class MainActivity extends AppCompatActivity {
             // 不正な日付の場合の処理
         }
 
-        ArrayList<ListItem> data = new ArrayList<>();
+        RealmResults<Schedule> result = mRealm.where(Schedule.class).findAll();
+        ArrayList<Schedule> data = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            Schedule schedule = new Schedule();
-            schedule.getDate();
-            schedule.getWork();
-            data.add(schedule);
+            data.add(result.get(i));
         }
         MyListAdapter adapter = new MyListAdapter(this, data, R.layout.list_item);
         ListView list = findViewById(R.id.list);

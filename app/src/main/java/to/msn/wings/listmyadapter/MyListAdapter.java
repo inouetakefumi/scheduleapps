@@ -6,16 +6,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import android.view.LayoutInflater;
+import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
 
 public class MyListAdapter extends BaseAdapter {
     private Context context;
-    private ArrayList<ListItem> data;
+    private ArrayList<Schedule> data;
     private int resource;
 
     MyListAdapter(Context context,
-                         ArrayList<ListItem> data, int resource) {
+                         ArrayList<Schedule> data, int resource) {
         this.context = context;
         this.data = data;
         this.resource = resource;
@@ -36,16 +38,21 @@ public class MyListAdapter extends BaseAdapter {
         return data.get(position).getId();
     }
 
+    private static class ViewHolder {
+        TextView date;
+        TextView work;
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         Activity activity = (Activity) context;
-        ListItem item = (ListItem) getItem(position);
+        Schedule schedule = (Schedule) getItem(position);
         if (convertView == null) {
             convertView = activity.getLayoutInflater()
                     .inflate(resource, null);
         }
-        ((TextView) convertView.findViewById(R.id.title)).setText(item.getTitle());
-        ((TextView) convertView.findViewById(R.id.tag)).setText(item.getTag());
+        ((TextView) convertView.findViewById(R.id.date)).setText(schedule.getDate());
+        ((TextView) convertView.findViewById(R.id.work)).setText(schedule.getWork());
         return convertView;
     }
 }

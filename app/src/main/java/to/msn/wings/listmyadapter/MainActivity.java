@@ -1,6 +1,8 @@
 package to.msn.wings.listmyadapter;
 
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ListView;
 
@@ -10,6 +12,9 @@ import java.util.Random;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
+import android.widget.Toast;
+
+import android.widget.AdapterView;
 
 import java.util.Date;
 import java.util.Calendar;
@@ -17,6 +22,7 @@ import java.util.Calendar;
 public class MainActivity extends AppCompatActivity {
 
     private Realm mRealm;
+    private ListView list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         mRealm.deleteRealm(config);
 
         mRealm = Realm.getInstance(config);
+
 
         //データを10日初期登録
         try {
@@ -51,6 +58,19 @@ public class MainActivity extends AppCompatActivity {
         MyListAdapter adapter = new MyListAdapter(this, data, R.layout.list_item);
         ListView list = findViewById(R.id.list);
         list.setAdapter(adapter);
+
+
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(MainActivity.this, ScheduleActivity.class);
+                intent.putExtra("ID",position);
+                startActivity(intent);
+            }
+        });
+
+
+
     }
 
     class RealmInitTransaction implements Realm.Transaction {

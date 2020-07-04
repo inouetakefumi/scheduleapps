@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
         //データを10日初期登録
         try {
-            for(int i = 0;i<10;i++){
+            for(int i = 0;i<100;i++){
                 mRealm.executeTransaction(new RealmInitTransaction(i) {
                 });
             }
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
         RealmResults<Schedule> result = mRealm.where(Schedule.class).findAll();
         ArrayList<Schedule> data = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 100; i++) {
             data.add(result.get(i));
         }
         MyListAdapter adapter = new MyListAdapter(this, data, R.layout.list_item);

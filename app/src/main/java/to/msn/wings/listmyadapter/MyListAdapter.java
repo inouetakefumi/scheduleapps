@@ -49,9 +49,9 @@ public class MyListAdapter extends BaseAdapter {
         Schedule schedule = (Schedule) getItem(position);
         if (convertView == null) {
             convertView = activity.getLayoutInflater()
-                    .inflate(resource, null);
+                    .inflate(R.layout.list_item, null);
         }
-        ((TextView) convertView.findViewById(R.id.date)).setText(schedule.getDate());
+        ((TextView) convertView.findViewById(R.id.date)).setText(schedule.getDate().toString());
         ((TextView) convertView.findViewById(R.id.work)).setText(schedule.getWork());
         return convertView;
     }

@@ -38,21 +38,21 @@ public class ScheduleActivity extends AppCompatActivity {
         mRealm = Realm.getInstance(config);
 
         Intent i = getIntent();
-        int id = i.getIntExtra("ID",0);
+        long rid = i.getIntExtra("ID",0);
 
-        mRealm.executeTransaction(new RealmDateDisplayTransaction(id) {
+        mRealm.executeTransaction(new RealmDateDisplayTransaction(rid) {
         });
     }
 
     class RealmDateDisplayTransaction implements Realm.Transaction {
-        int id=0;
-        RealmDateDisplayTransaction(int position){
-            this.id = position;
+        long rid=0;
+        RealmDateDisplayTransaction(long rid){
+            this.rid = rid;
         }
         @Override
         public void execute(Realm realm) {
             Schedule schedule = realm.where(Schedule.class)
-                    .equalTo("id", id)
+                    .equalTo("id", rid)
                     .findFirst();
             mTextView = (TextView) findViewById(R.id.date);
 

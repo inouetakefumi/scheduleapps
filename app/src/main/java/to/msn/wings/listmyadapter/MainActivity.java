@@ -5,6 +5,7 @@ import android.view.View;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ListView;
+import android.widget.Toolbar;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -28,6 +29,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setActionBar(toolbar);
 
         RealmConfiguration config = new RealmConfiguration.Builder()
                 .name("schedule.realm")

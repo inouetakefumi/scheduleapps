@@ -9,6 +9,7 @@ import android.widget.Toast;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 import java.text.SimpleDateFormat;
 
@@ -25,6 +26,16 @@ public class ScheduleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setActionBar(toolbar);
+
+        RealmConfiguration config = new RealmConfiguration.Builder()
+                .name("schedule.realm")
+                .schemaVersion(1)
+                .build();
+
+        mRealm = Realm.getInstance(config);
 
         Intent i = getIntent();
         int position = i.getIntExtra("ID",0);

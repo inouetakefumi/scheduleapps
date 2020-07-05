@@ -63,18 +63,16 @@ public class MainActivity extends AppCompatActivity {
         ListView list = findViewById(R.id.list);
         list.setAdapter(adapter);
 
-
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                MyListAdapter adapter = (MyListAdapter) parent.getAdapter();
+                Schedule schedule = (Schedule) adapter.getItem(position);
                 Intent intent = new Intent(MainActivity.this, ScheduleActivity.class);
-                intent.putExtra("ID",position);
+                intent.putExtra("ID",schedule.getId());
                 startActivity(intent);
             }
         });
-
-
-
     }
 
     class RealmInitTransaction implements Realm.Transaction {

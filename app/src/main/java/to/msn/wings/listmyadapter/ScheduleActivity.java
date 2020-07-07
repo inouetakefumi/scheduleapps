@@ -38,7 +38,7 @@ public class ScheduleActivity extends AppCompatActivity {
         mRealm = Realm.getInstance(config);
 
         Intent i = getIntent();
-        long rid = i.getIntExtra("ID",0);
+        long rid = i.getLongExtra("ID",0);
 
         mRealm.executeTransaction(new RealmDateDisplayTransaction(rid) {
         });

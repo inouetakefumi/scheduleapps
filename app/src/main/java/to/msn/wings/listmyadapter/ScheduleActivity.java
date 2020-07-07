@@ -86,10 +86,29 @@ public class ScheduleActivity extends AppCompatActivity {
                         Toast.LENGTH_SHORT).show();
 
             }
-
         });
 
         //登録ボタンを押下したの実装
+        Button input = findViewById(R.id.input);
+        input.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mRealm.executeTransaction(new Realm.Transaction() {
+                            @Override
+                            public void execute(Realm realm) {
+                                Schedule schedule = realm.where(Schedule.class).equalTo("id", rid)
+                                        .findFirst();
+                                //schedule.work = xxxx
+                                //schedule.detail = xxxx
+
+                            }
+                        });
+                        finish();
+
+                    }
+                }
+        );
 
         //キャンセルボタンを押下したの実装
         Button cancel = findViewById(R.id.cancel);

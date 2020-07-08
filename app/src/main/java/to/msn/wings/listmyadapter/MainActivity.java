@@ -24,6 +24,7 @@ import java.util.Calendar;
 public class MainActivity extends AppCompatActivity {
 
     private Realm mRealm;
+    private Realm pRealm;
     private ListView list;
 
     @Override
@@ -43,6 +44,14 @@ public class MainActivity extends AppCompatActivity {
 
         mRealm = Realm.getInstance(config);
 
+        RealmConfiguration profile = new RealmConfiguration.Builder()
+                .name("profile.realm")
+                .schemaVersion(1)
+                .build();
+
+        pRealm.deleteRealm(profile);
+
+        pRealm = Realm.getInstance(profile);
 
         //データを10日初期登録
         try {
@@ -54,6 +63,9 @@ public class MainActivity extends AppCompatActivity {
         catch (IllegalArgumentException e) {
             // 不正な日付の場合の処理
         }
+
+        pRealm.executeTransaction(new RealmProfileTransaction() {
+        });
 
         RealmResults<Schedule> result = mRealm.where(Schedule.class).findAll();
         ArrayList<Schedule> data = new ArrayList<>();
@@ -102,6 +114,22 @@ public class MainActivity extends AppCompatActivity {
             Date d = c.getTime();
             schedule.date = d;
             schedule.name = "井上武史";
+
+        }
+    }
+    class RealmProfileTransaction implements Realm.Transaction {
+        public void execute(Realm realm) {
+            Number max = realm.where(Profile.class).max("id");
+            long newId = 0;
+            if(max != null) { // nullチェック
+                newId = max.longValue() + 1;
+            }
+            Profile profile
+                    = realm.createObject(Profile.class, newId);
+
+
+            profile.name = "井上武史";
+            profile.phonenumber= "090-6978-0495";
 
         }
     }

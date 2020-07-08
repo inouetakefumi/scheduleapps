@@ -88,7 +88,6 @@ public class ScheduleActivity extends AppCompatActivity {
             }
         });
 
-        //登録ボタンを押下したの実装
         Button input = findViewById(R.id.input);
         input.setOnClickListener(
                 new View.OnClickListener() {
@@ -99,17 +98,16 @@ public class ScheduleActivity extends AppCompatActivity {
                             public void execute(Realm realm) {
                                 Schedule schedule = realm.where(Schedule.class).equalTo("id", rid)
                                         .findFirst();
-                                //schedule.work = xxxx
-                                //schedule.detail = xxxx
+                                Spinner sp = findViewById(R.id.spinner);
+                                schedule.work = sp.getSelectedItem();
+                                finish();
 
                             }
-                        });
-                        finish();
 
+                        });
                     }
                 }
         );
-
         //キャンセルボタンを押下したの実装
         Button cancel = findViewById(R.id.cancel);
         cancel.setOnClickListener(

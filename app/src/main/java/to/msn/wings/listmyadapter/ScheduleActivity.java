@@ -47,7 +47,7 @@ public class ScheduleActivity extends AppCompatActivity {
         mRealm = Realm.getInstance(config);
 
         Intent i = getIntent();
-        long rid = i.getLongExtra("ID",0);
+        final long rid = i.getLongExtra("ID",0);
 
         mRealm.executeTransaction(new RealmDateDisplayTransaction(rid) {
         });
@@ -99,8 +99,7 @@ public class ScheduleActivity extends AppCompatActivity {
                                 Schedule schedule = realm.where(Schedule.class).equalTo("id", rid)
                                         .findFirst();
                                 Spinner sp = findViewById(R.id.spinner);
-                                schedule.work = sp.getSelectedItem();
-                                finish();
+                                schedule.work = sp.getSelectedItem().toString();
 
                             }
 
@@ -108,6 +107,10 @@ public class ScheduleActivity extends AppCompatActivity {
                     }
                 }
         );
+
+        //realmに格納されているか確認
+
+
         //キャンセルボタンを押下したの実装
         Button cancel = findViewById(R.id.cancel);
         cancel.setOnClickListener(

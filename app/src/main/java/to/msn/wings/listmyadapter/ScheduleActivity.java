@@ -100,6 +100,9 @@ public class ScheduleActivity extends AppCompatActivity {
                                         .findFirst();
                                 Spinner sp = findViewById(R.id.spinner);
                                 schedule.work = sp.getSelectedItem().toString();
+                                finish();
+
+
 
                             }
 
@@ -108,7 +111,6 @@ public class ScheduleActivity extends AppCompatActivity {
                 }
         );
 
-        //realmに格納されているか確認
 
 
         //キャンセルボタンを押下したの実装

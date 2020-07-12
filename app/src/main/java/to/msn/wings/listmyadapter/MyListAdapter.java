@@ -11,13 +11,15 @@ import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
 
+import io.realm.Realm;
+
 public class MyListAdapter extends BaseAdapter {
     private Context context;
     private ArrayList<Schedule> data;
     private int resource;
 
     MyListAdapter(Context context,
-                         ArrayList<Schedule> data, int resource) {
+                  ArrayList<Schedule> data, int resource) {
         this.context = context;
         this.data = data;
         this.resource = resource;

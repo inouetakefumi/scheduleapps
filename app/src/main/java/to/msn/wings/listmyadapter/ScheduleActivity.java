@@ -1,5 +1,7 @@
 package to.msn.wings.listmyadapter;
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -27,10 +29,12 @@ import io.realm.RealmResults;
 public class ScheduleActivity extends AppCompatActivity {
 
     private TextView mTextView;
+    private Spinner mSpinnerWork;
     private Realm mRealm;
     private EditText mTitle;
     private EditText mDetail;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,11 +102,18 @@ public class ScheduleActivity extends AppCompatActivity {
                             public void execute(Realm realm) {
                                 Schedule schedule = realm.where(Schedule.class).equalTo("id", rid)
                                         .findFirst();
+//                                schedule.work = sp.getSelectedItem().toString();
+                                //選択した勤怠のspinner位置をDBに保持する
                                 Spinner sp = findViewById(R.id.spinner);
-                                schedule.work = sp.getSelectedItem().toString();
+                                schedule.setWorkPosition(sp.getSelectedItemPosition());
+                                schedule.setWork(sp.getSelectedItem().toString());
+
+                                //タスクメモのテキスト内容をDBに保持する
+                                EditText detail = findViewById(R.id.detail);
+                                schedule.setDetail(detail.getText().toString());
+
+                                setResult(RESULT_OK);
                                 finish();
-
-
 
                             }
 
@@ -143,6 +154,14 @@ public class ScheduleActivity extends AppCompatActivity {
             String formatDate = sdf.format(schedule.getDate());
             // 表示するスケジュールをTextViewに表示します。
             mTextView.setText(formatDate);
+
+            // 取得した勤怠リストのポジションを取得して、spinnerの選択状態にする
+            mSpinnerWork = (Spinner) findViewById(R.id.spinner);
+            mSpinnerWork.setSelection(schedule.getWorkPosition());
+
+            // 取得したタスクメモをEditTextに表示させる
+            mDetail = (EditText) findViewById(R.id.detail);
+            mDetail.setText(schedule.getDetail());
         }
     }
 

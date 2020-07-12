@@ -10,6 +10,7 @@ public class Schedule extends RealmObject {
     public String name;
     public Date date;   //予定の日付
     public String work;    // 勤怠
+    public int workPosition;    // 勤怠(0:出社、1:テレワーク、2:休み）
     public String detail;   // 予定の詳細
 
     public long getId() {
@@ -42,6 +43,14 @@ public class Schedule extends RealmObject {
 
     public void setWork(String work) {
         this.work = work;
+    }
+
+    public int getWorkPosition() {
+        return workPosition;
+    }
+
+    public void setWorkPosition(int workPosition) {
+        this.workPosition = workPosition;
     }
 
     public String getDetail() {

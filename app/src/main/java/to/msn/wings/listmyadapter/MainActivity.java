@@ -1,5 +1,7 @@
 package to.msn.wings.listmyadapter;
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.content.Intent;
@@ -26,7 +28,9 @@ public class MainActivity extends AppCompatActivity {
     private Realm mRealm;
     private Realm pRealm;
     private ListView list;
+    private int mPosition;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +74,12 @@ public class MainActivity extends AppCompatActivity {
         RealmResults<Schedule> result = mRealm.where(Schedule.class).findAll();
         ArrayList<Schedule> data = new ArrayList<>();
         for (int i = 0; i < 100; i++) {
-            data.add(result.get(i));
+            Schedule schedule = new Schedule();
+            schedule.setId(result.get(i).getId());
+            schedule.setName(result.get(i).getName());
+            schedule.setDate(result.get(i).getDate());
+//            data.add(result.get(i));
+            data.add(schedule);
         }
         MyListAdapter adapter = new MyListAdapter(this, data, R.layout.list_item);
         ListView list = findViewById(R.id.list);
@@ -83,9 +92,23 @@ public class MainActivity extends AppCompatActivity {
                 Schedule schedule = (Schedule) adapter.getItem(position);
                 Intent intent = new Intent(MainActivity.this, ScheduleActivity.class);
                 intent.putExtra("ID",schedule.getId());
-                startActivity(intent);
+//                startActivity(intent);
+                mPosition = position;
+                startActivityForResult(intent, 1);
             }
         });
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            ListView list = findViewById(R.id.list);
+            MyListAdapter adapter = (MyListAdapter) list.getAdapter();
+            Schedule schedule = (Schedule)adapter.getItem(mPosition);
+            RealmResults<Schedule> result = mRealm.where(Schedule.class).findAll();
+            String work = result.get(mPosition).getWork();
+            schedule.setWork(work);
+        }
     }
 
     class RealmInitTransaction implements Realm.Transaction {

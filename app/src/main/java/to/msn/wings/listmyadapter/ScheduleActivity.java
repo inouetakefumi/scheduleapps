@@ -30,6 +30,7 @@ public class ScheduleActivity extends AppCompatActivity {
     private Realm mRealm;
     private EditText mTitle;
     private EditText mDetail;
+    private Spinner mSpinnerWork;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +62,8 @@ public class ScheduleActivity extends AppCompatActivity {
                 Toast.makeText(ScheduleActivity.this,
                         String.format("選択項目：%s", sp.getSelectedItem()),
                         Toast.LENGTH_SHORT).show();
+
+
             }
 
             public void onNothingSelected(AdapterView<?> parent) {}
@@ -100,13 +103,25 @@ public class ScheduleActivity extends AppCompatActivity {
                                         .findFirst();
                                 Spinner sp = findViewById(R.id.spinner);
                                 schedule.work = sp.getSelectedItem().toString();
+
+                                //選択した勤怠のspinner位置をDBに保持する
+                                schedule.setWorkPosition(sp.getSelectedItemPosition());
+                                schedule.setWork(sp.getSelectedItem().toString());
+
+                                //タスクメモのテキスト内容をDBに保持する
+                                EditText detail = findViewById(R.id.detail);
+                                schedule.setDetail(detail.getText().toString());
+
+                                setResult(RESULT_OK);
                                 finish();
+
 
 
 
                             }
 
                         });
+                        mRealm.close();
                     }
                 }
         );
@@ -143,6 +158,14 @@ public class ScheduleActivity extends AppCompatActivity {
             String formatDate = sdf.format(schedule.getDate());
             // 表示するスケジュールをTextViewに表示します。
             mTextView.setText(formatDate);
+
+            // 取得した勤怠リストのポジションを取得して、spinnerの選択状態にする
+            mSpinnerWork = (Spinner) findViewById(R.id.spinner);
+            mSpinnerWork.setSelection(schedule.getWorkPosition());
+
+            // 取得したタスクメモをEditTextに表示させる
+            mDetail = (EditText) findViewById(R.id.detail);
+            mDetail.setText(schedule.getDetail());
         }
     }
 

@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
                 .schemaVersion(1)
                 .build();
 
-        mRealm.deleteRealm(config);
+        //mRealm.deleteRealm(config);
 
         mRealm = Realm.getInstance(config);
 

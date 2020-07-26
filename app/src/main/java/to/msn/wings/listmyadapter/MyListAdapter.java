@@ -59,7 +59,7 @@ public class MyListAdapter extends BaseAdapter {
         } else {
         viewHolder = (ViewHolder) convertView.getTag();
     }
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd (E)");
         String formatDate = sdf.format(schedule.getDate());
         viewHolder.date.setText(formatDate);
         viewHolder.work.setText(schedule.getWork());

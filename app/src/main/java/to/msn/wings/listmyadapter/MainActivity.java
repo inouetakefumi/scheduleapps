@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
                 .schemaVersion(1)
                 .build();
 
-        mRealm.deleteRealm(config);
+        //mRealm.deleteRealm(config);
 
         mRealm = Realm.getInstance(config);
 
@@ -67,7 +67,16 @@ public class MainActivity extends AppCompatActivity {
         pRealm.executeTransaction(new RealmProfileTransaction() {
         });
 
-        RealmResults<Schedule> result = mRealm.where(Schedule.class).findAll();
+        Calendar today = Calendar.getInstance();
+        today.set(Calendar.HOUR_OF_DAY, 0);
+        today.set(Calendar.MINUTE, 0);
+        today.set(Calendar.SECOND, 0);
+        today.set(Calendar.MILLISECOND, 0);
+        // today は　今日の日付の0時0分0.000秒
+        Date todayDate = today.getTime();
+        RealmResults<Schedule> result = mRealm.where(Schedule.class)
+                .greaterThanOrEqualTo("date", todayDate)
+                .findAll();
         ArrayList<Schedule> data = new ArrayList<>();
         for (int i = 0; i < 100; i++) {
             data.add(result.get(i));
@@ -136,7 +145,17 @@ public class MainActivity extends AppCompatActivity {
 
     protected void onResume() {
         super.onResume();
-        RealmResults<Schedule> result = mRealm.where(Schedule.class).findAll();
+
+        Calendar today = Calendar.getInstance();
+        today.set(Calendar.HOUR_OF_DAY, 0);
+        today.set(Calendar.MINUTE, 0);
+        today.set(Calendar.SECOND, 0);
+        today.set(Calendar.MILLISECOND, 0);
+        // today は　今日の日付の0時0分0.000秒
+        Date todayDate = today.getTime();
+        RealmResults<Schedule> result = mRealm.where(Schedule.class)
+                .greaterThanOrEqualTo("date", todayDate)
+                .findAll();
         ArrayList<Schedule> data = new ArrayList<>();
         for (int i = 0; i < 100; i++) {
             data.add(result.get(i));

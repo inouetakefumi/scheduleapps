@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
         pRealm = Realm.getInstance(profile);
 
-        //データを10日初期登録
+        //データを100日初期登録
         try {
             for(int i = 0;i<100;i++){
                 mRealm.executeTransaction(new RealmInitTransaction(i) {
@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
             c.set(year, month , day+i);
             Date d = c.getTime();
             schedule.date = d;
-            schedule.name = "井上武史";
+            schedule.name = "井上";
 
         }
     }
@@ -128,10 +128,22 @@ public class MainActivity extends AppCompatActivity {
                     = realm.createObject(Profile.class, newId);
 
 
-            profile.name = "井上武史";
-            profile.phonenumber= "090-6978-0495";
+            profile.name = "井上";
+            profile.phonenumber= "090-xxxx-xxxx";
 
         }
+    }
+
+    protected void onResume() {
+        super.onResume();
+        RealmResults<Schedule> result = mRealm.where(Schedule.class).findAll();
+        ArrayList<Schedule> data = new ArrayList<>();
+        for (int i = 0; i < 100; i++) {
+            data.add(result.get(i));
+        }
+        MyListAdapter adapter = new MyListAdapter(this, data, R.layout.list_item);
+        ListView list = findViewById(R.id.list);
+        list.setAdapter(adapter);
     }
 
 

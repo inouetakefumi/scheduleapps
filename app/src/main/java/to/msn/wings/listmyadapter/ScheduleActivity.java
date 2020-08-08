@@ -59,11 +59,6 @@ public class ScheduleActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int position, long id) {
                 Spinner sp = (Spinner) parent;
-                Toast.makeText(ScheduleActivity.this,
-                        String.format("選択項目：%s", sp.getSelectedItem()),
-                        Toast.LENGTH_SHORT).show();
-
-
             }
 
             public void onNothingSelected(AdapterView<?> parent) {}
@@ -84,9 +79,6 @@ public class ScheduleActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                Toast.makeText(ScheduleActivity.this,
-                        String.format("入力：%s", editable.toString()),
-                        Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -114,10 +106,6 @@ public class ScheduleActivity extends AppCompatActivity {
 
                                 setResult(RESULT_OK);
                                 finish();
-
-
-
-
                             }
 
                         });

@@ -8,13 +8,10 @@ import android.widget.ListView;
 import android.widget.Toolbar;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
-import android.widget.Toast;
-
 
 import android.widget.AdapterView;
 
@@ -40,13 +37,13 @@ public class MainActivity extends AppCompatActivity {
                 .schemaVersion(1)
                 .build();
 
-        //mRealm.deleteRealm(config);
+        mRealm.deleteRealm(config);
 
         mRealm = Realm.getInstance(config);
 
         RealmConfiguration profile = new RealmConfiguration.Builder()
                 .name("profile.realm")
-                .schemaVersion(1)
+                .schemaVersion(2)
                 .build();
 
         pRealm.deleteRealm(profile);

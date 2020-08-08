@@ -7,9 +7,10 @@ public class Profile extends RealmObject {
     @PrimaryKey
     public long id;     // スケジュール// を見分けるためのIDが必要
     public String name;
+    public String kana;
     public String phonenumber;
     public String mail;
-
+    public String part;
 
     public long getId() {
         return id;
@@ -25,6 +26,14 @@ public class Profile extends RealmObject {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getKana() {
+        return kana;
+    }
+
+    public void setKana(String name) {
+        this.kana = kana;
     }
 
     public String getPhonenumber() {
@@ -43,5 +52,12 @@ public class Profile extends RealmObject {
         this.mail = mail;
     }
 
+    public String getPart() {
+        return part;
+    }
+
+    public void setPart(String part) {
+        this.part = part;
+    }
 
 }

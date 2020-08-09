@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
         RealmConfiguration profile = new RealmConfiguration.Builder()
                 .name("profile.realm")
-                .schemaVersion(3)
+                .schemaVersion(4)
                 .build();
 
         pRealm.deleteRealm(profile);
@@ -49,12 +49,27 @@ public class MainActivity extends AppCompatActivity {
         RealmResults<Profile> profileresult = pRealm.where(Profile.class)
                 .findAll();
         ArrayList<Profile> data = new ArrayList<>();
+
         for (int i = 0; i < 100; i++) {
-            data.add(profileresult.get(i));
+            if (i < profileresult.size()) {
+                data.add(profileresult.get(i));
+            }
         }
+
         ProfileAdapter adapter = new ProfileAdapter(this, data, R.layout.list_name);
         ListView list = findViewById(R.id.list);
         list.setAdapter(adapter);
+
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ProfileAdapter adapter = (ProfileAdapter) parent.getAdapter();
+                Profile profile = (Profile) adapter.getItem(position);
+                Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+                intent.putExtra("ID",profile.getId());
+                startActivity(intent);
+            }
+        });
     }
 
 
@@ -68,10 +83,10 @@ public class MainActivity extends AppCompatActivity {
             Profile profile
                     = realm.createObject(Profile.class, newId);
 
-            profile.name = "井上";
-            profile.kana = "イノウエ";
+            profile.name = "井上 武史";
+            profile.kana = "イノウエ　タケフミ";
             profile.phonenumber= "090-xxxx-xxxx";
-            profile.mail = "xxx@xxx";
+            profile.mail = "@xxx";
             profile.part = "第一システム担当";
 
         }

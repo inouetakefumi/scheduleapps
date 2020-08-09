@@ -80,7 +80,8 @@ public class MainActivity extends AppCompatActivity {
         sRealm.deleteRealm(config);
 
         sRealm = Realm.getInstance(config);
-        //データを100日初期登録
+
+        //scheduleを100日初期登録
         try {
             for(int i = 0;i<100;i++){
                 sRealm.executeTransaction(new RealmInitTransaction(i) {
@@ -91,7 +92,6 @@ public class MainActivity extends AppCompatActivity {
             // 不正な日付の場合の処理
         }
     }
-
 
     class RealmProfileTransaction implements Realm.Transaction {
         public void execute(Realm realm) {

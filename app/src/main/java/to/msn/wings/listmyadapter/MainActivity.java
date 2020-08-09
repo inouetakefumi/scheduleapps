@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
             profile.name = "井上 武史";
             profile.kana = "イノウエ　タケフミ";
             profile.phonenumber= "090-xxxx-xxxx";
-            profile.mail = "@xxx";
+            profile.mail = "inouetakefumi@xxx";
             profile.part = "第一システム担当";
 
         }

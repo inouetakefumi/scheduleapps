@@ -106,7 +106,8 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_add:
-                finish();
+                Intent intent = new Intent(MainActivity.this, ProfileAddActivity.class);
+                startActivity(intent);
                 break;
         }
         return true;

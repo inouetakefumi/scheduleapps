@@ -5,7 +5,8 @@ import android.view.View;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ListView;
-import android.widget.Toolbar;
+import android.support.v7.widget.Toolbar;
+
 
 import java.util.ArrayList;
 
@@ -30,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
-        setActionBar(toolbar);
+        setSupportActionBar(toolbar);
 
         RealmConfiguration profile = new RealmConfiguration.Builder()
                 .name("profile.realm")

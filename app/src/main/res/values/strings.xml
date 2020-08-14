@@ -25,4 +25,6 @@
     <string name="mail_text">メールアドレス</string>
     <string name="part_text">担当</string>
     <string name="schedulebottuon">スケジュール</string>
+
+    <string name="action_cansel">戻る</string>
 </resources>

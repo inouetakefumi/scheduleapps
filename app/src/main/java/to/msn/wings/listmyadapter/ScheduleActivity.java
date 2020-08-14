@@ -9,7 +9,7 @@ import android.widget.Toast;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toolbar;
+import android.support.v7.widget.Toolbar;
 import android.widget.AdapterView;
 
 import android.widget.Spinner;
@@ -38,7 +38,7 @@ public class ScheduleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_schedule);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
-        setActionBar(toolbar);
+        setSupportActionBar(toolbar);
 
         RealmConfiguration config = new RealmConfiguration.Builder()
                 .name("schedule.realm")

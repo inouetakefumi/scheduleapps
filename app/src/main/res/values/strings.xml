@@ -27,4 +27,5 @@
     <string name="schedulebottuon">スケジュール</string>
 
     <string name="action_cansel">戻る</string>
+    <string name="action_add">メンバー追加</string>
 </resources>

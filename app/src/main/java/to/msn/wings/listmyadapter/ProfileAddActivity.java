@@ -46,6 +46,8 @@ public class ProfileAddActivity extends AppCompatActivity {
 
         pPhoneNumber = (EditText) findViewById(R.id.phonenumber_edit);
 
+        pMail = (EditText) findViewById(R.id.mail_edit);
+
         Button input = findViewById(R.id.input);
         input.setOnClickListener(
                 new View.OnClickListener() {
@@ -85,7 +87,7 @@ public class ProfileAddActivity extends AppCompatActivity {
                                 //scheduleを100日初期登録
                                 try {
                                     for(int i = 0;i<100;i++){
-                                        sRealm.executeTransaction(new ProfileAddActivity.RealmInitTransaction(i) {
+                                        sRealm.executeTransaction(new ProfileAddActivity.RealmScheduleAdd(i) {
                                         });
                                     }
                                 }
@@ -117,9 +119,9 @@ public class ProfileAddActivity extends AppCompatActivity {
         }
         return true;
     }
-    class RealmInitTransaction implements Realm.Transaction {
+    class RealmScheduleAdd implements Realm.Transaction {
         int i =0;
-        RealmInitTransaction(int i){
+        RealmScheduleAdd(int i){
             this.i = i;
         }
         @Override
@@ -142,6 +144,7 @@ public class ProfileAddActivity extends AppCompatActivity {
             c.set(year, month , day+i);
             Date d = c.getTime();
             schedule.date = d;
+            schedule.name = pName.getText().toString();
 
         }
     }

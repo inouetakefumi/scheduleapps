@@ -43,21 +43,24 @@ public class ProfileActivity extends AppCompatActivity {
 
         Intent i = getIntent();
         final long rid = i.getLongExtra("ID",0);
+        final String name = i.getStringExtra("Name");
 
-        pRealm.executeTransaction(new ProfileActivity.RealmProfileDisplayTransaction(rid) {
+        pRealm.executeTransaction(new ProfileActivity.RealmProfileDisplayTransaction(name,rid) {
         });
 
     }
 
     class RealmProfileDisplayTransaction implements Realm.Transaction {
+        String name;
         long rid=0;
-        RealmProfileDisplayTransaction(long rid){
+        RealmProfileDisplayTransaction(String name,long rid){
+            this.name = name;
             this.rid = rid;
         }
         @Override
         public void execute(Realm realm) {
             Profile profile = realm.where(Profile.class)
-                    .equalTo("id", rid)
+                    .equalTo("name", name)
                     .findFirst();
 
             // 取得した名前をEditTextに表示させる
@@ -80,6 +83,7 @@ public class ProfileActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View view) {
                             Intent intent = new Intent(ProfileActivity.this, ScheduleAllActivity.class);
+                            intent.putExtra("Name",name);
                             intent.putExtra("ID",rid);
                             startActivity(intent);
                         }

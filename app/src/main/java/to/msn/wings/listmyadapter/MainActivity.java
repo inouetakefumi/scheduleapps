@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
                 ProfileAdapter adapter = (ProfileAdapter) parent.getAdapter();
                 Profile profile = (Profile) adapter.getItem(position);
                 Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+                intent.putExtra("Name",profile.getName());
                 intent.putExtra("ID",profile.getId());
                 startActivity(intent);
             }

@@ -80,8 +80,6 @@ public class MainActivity extends AppCompatActivity {
                 .schemaVersion(1)
                 .build();
 
-        sRealm.deleteRealm(config);
-
         sRealm = Realm.getInstance(config);
 
         //scheduleを100日初期登録
@@ -160,6 +158,22 @@ public class MainActivity extends AppCompatActivity {
             schedule.name = "井上 武史";
 
         }
+    }
+
+    protected void onResume() {
+        super.onResume();
+
+        RealmResults<Profile> profileresult = pRealm.where(Profile.class)
+                .findAll();
+        ArrayList<Profile> data = new ArrayList<>();
+        for (int i = 0; i < 100; i++) {
+            if (i < profileresult.size()) {
+                data.add(profileresult.get(i));
+            }
+        }
+        ProfileAdapter adapter = new ProfileAdapter(this, data, R.layout.list_item);
+        ListView list = findViewById(R.id.list);
+        list.setAdapter(adapter);
     }
 
 

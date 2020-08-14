@@ -23,8 +23,9 @@ import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Realm sRealm;
+
     private Realm pRealm;
+    private Realm sRealm;
     private ListView list;
 
     @Override
@@ -42,12 +43,14 @@ public class MainActivity extends AppCompatActivity {
 
         pRealm.deleteRealm(profile);
 
+        RealmConfiguration config = new RealmConfiguration.Builder()
+                .name("schedule.realm")
+                .schemaVersion(1)
+                .build();
+
+        sRealm.deleteRealm(config);
+
         pRealm = Realm.getInstance(profile);
-
-        //profileを初期登録
-
-        pRealm.executeTransaction(new RealmProfileTransaction() {
-        });
 
         //adapterにprofileDBを登録
         RealmResults<Profile> profileresult = pRealm.where(Profile.class)
@@ -75,23 +78,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        RealmConfiguration config = new RealmConfiguration.Builder()
-                .name("schedule.realm")
-                .schemaVersion(1)
-                .build();
 
-        sRealm = Realm.getInstance(config);
-
-        //scheduleを100日初期登録
-        try {
-            for(int i = 0;i<100;i++){
-                sRealm.executeTransaction(new RealmInitTransaction(i) {
-                });
-            }
-        }
-        catch (IllegalArgumentException e) {
-            // 不正な日付の場合の処理
-        }
     }
 
     @Override
@@ -109,55 +96,6 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         return true;
-    }
-
-    class RealmProfileTransaction implements Realm.Transaction {
-        public void execute(Realm realm) {
-            Number max = realm.where(Profile.class).max("id");
-            long newId = 0;
-            if(max != null) { // nullチェック
-                newId = max.longValue() + 1;
-            }
-            Profile profile
-                    = realm.createObject(Profile.class, newId);
-
-            profile.name = "井上 武史";
-            profile.kana = "イノウエ　タケフミ";
-            profile.phonenumber= "090-xxxx-xxxx";
-            profile.mail = "inouetakefumi@xxx";
-            profile.part = "第一システム担当";
-
-        }
-    }
-
-    class RealmInitTransaction implements Realm.Transaction {
-        int i =0;
-        RealmInitTransaction(int i){
-            this.i = i;
-        }
-        @Override
-        public void execute(Realm realm) {
-            Number max = realm.where(Schedule.class).max("id");
-            long newId = 0;
-            if(max != null) { // nullチェック
-                newId = max.longValue() + 1;
-            }
-            Schedule schedule
-                    = realm.createObject(Schedule.class, newId);
-
-            Calendar c = Calendar.getInstance();
-
-            //当日日付を取得
-            int year = c.get(Calendar.YEAR);
-            int month = c.get(Calendar.MONTH);
-            int day= c.get(Calendar.DATE);
-            //日付を
-            c.set(year, month , day+i);
-            Date d = c.getTime();
-            schedule.date = d;
-            schedule.name = "井上 武史";
-
-        }
     }
 
     protected void onResume() {

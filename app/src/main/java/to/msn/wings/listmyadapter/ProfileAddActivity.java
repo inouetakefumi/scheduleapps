@@ -10,12 +10,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
 public class ProfileAddActivity extends AppCompatActivity {
 
     private Realm pRealm;
+    private Realm sRealm;
     private EditText pName;
     private EditText pKana;
     private EditText pPhoneNumber;
@@ -71,9 +75,25 @@ public class ProfileAddActivity extends AppCompatActivity {
                                 EditText pMail = findViewById(R.id.mail_edit);
                                 profile.setMail(pMail.getText().toString());
 
+                                RealmConfiguration config = new RealmConfiguration.Builder()
+                                        .name("schedule.realm")
+                                        .schemaVersion(1)
+                                        .build();
+
+                                sRealm = Realm.getInstance(config);
+
+                                //scheduleを100日初期登録
+                                try {
+                                    for(int i = 0;i<100;i++){
+                                        sRealm.executeTransaction(new ProfileAddActivity.RealmInitTransaction(i) {
+                                        });
+                                    }
+                                }
+                                catch (IllegalArgumentException e) {
+                                    // 不正な日付の場合の処理
+                                }
                                 finish();
                             }
-
                         });
                         pRealm.close();
                     }
@@ -97,4 +117,33 @@ public class ProfileAddActivity extends AppCompatActivity {
         }
         return true;
     }
+    class RealmInitTransaction implements Realm.Transaction {
+        int i =0;
+        RealmInitTransaction(int i){
+            this.i = i;
+        }
+        @Override
+        public void execute(Realm realm) {
+            Number max = realm.where(Schedule.class).max("id");
+            long newId = 0;
+            if(max != null) { // nullチェック
+                newId = max.longValue() + 1;
+            }
+            Schedule schedule
+                    = realm.createObject(Schedule.class, newId);
+
+            Calendar c = Calendar.getInstance();
+
+            //当日日付を取得
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day= c.get(Calendar.DATE);
+            //日付を
+            c.set(year, month , day+i);
+            Date d = c.getTime();
+            schedule.date = d;
+
+        }
+    }
 }
+

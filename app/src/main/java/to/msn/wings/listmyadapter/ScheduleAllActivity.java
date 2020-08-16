@@ -45,7 +45,7 @@ public class ScheduleAllActivity extends AppCompatActivity {
         Intent i = getIntent();
         final String name = i.getStringExtra("Name");
         final long rid = i.getLongExtra("ID",0);
-
+        System.out.println("Check name:" + name);
         Calendar today = Calendar.getInstance();
         today.set(Calendar.HOUR_OF_DAY, 0);
         today.set(Calendar.MINUTE, 0);

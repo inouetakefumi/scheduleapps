@@ -13,13 +13,14 @@ import android.support.v7.widget.Toolbar;
 import android.content.Intent;
 
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    private Realm pRealm;
+//    private Realm pRealm;
     private EditText pName;
     private EditText pKana;
     private EditText pPhoneNumber;
@@ -34,20 +35,19 @@ public class ProfileActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        RealmConfiguration config = new RealmConfiguration.Builder()
-                .name("profile.realm")
-                .schemaVersion(4)
-                .build();
-
-        pRealm = Realm.getInstance(config);
+//        RealmConfiguration config = new RealmConfiguration.Builder()
+//                .name("profile.realm")
+//                .schemaVersion(4)
+//                .build();
+//
+//        pRealm = Realm.getInstance(config);
 
         Intent i = getIntent();
         final long rid = i.getLongExtra("ID",0);
         final String name = i.getStringExtra("Name");
 
-        pRealm.executeTransaction(new ProfileActivity.RealmProfileDisplayTransaction(name,rid) {
+        Realm.getDefaultInstance().executeTransaction(new ProfileActivity.RealmProfileDisplayTransaction(name,rid) {
         });
-
     }
 
     class RealmProfileDisplayTransaction implements Realm.Transaction {

@@ -10,6 +10,5 @@ public class ScheduleApplication extends Application {
         super.onCreate();
 
         Realm.init(this);
-
     }
 }

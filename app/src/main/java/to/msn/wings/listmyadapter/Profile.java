@@ -1,9 +1,17 @@
 package to.msn.wings.listmyadapter;
 
+import io.realm.Realm;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 public class Profile extends RealmObject {
+
+    public Profile() {
+        Number max = Realm.getDefaultInstance().where(Profile.class)
+                .max("id");
+        id = max == null ? 1L : (max.longValue() + 1L);
+    }
+
     @PrimaryKey
     public long id;     // スケジュール// を見分けるためのIDが必要
     public String name;
@@ -60,4 +68,12 @@ public class Profile extends RealmObject {
         this.part = part;
     }
 
+    public static void insertOrUpdate(final Profile profile) {
+        Realm.getDefaultInstance().executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.insertOrUpdate(profile);
+            }
+        });
+    }
 }

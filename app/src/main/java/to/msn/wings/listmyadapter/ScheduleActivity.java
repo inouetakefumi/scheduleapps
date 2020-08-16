@@ -27,7 +27,6 @@ import io.realm.RealmResults;
 public class ScheduleActivity extends AppCompatActivity {
 
     private TextView mTextView;
-    private Realm mRealm;
     private EditText mTitle;
     private EditText mDetail;
     private Spinner mSpinnerWork;
@@ -40,17 +39,11 @@ public class ScheduleActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        RealmConfiguration config = new RealmConfiguration.Builder()
-                .name("schedule.realm")
-                .schemaVersion(1)
-                .build();
-
-        mRealm = Realm.getInstance(config);
 
         Intent i = getIntent();
         final long rid = i.getLongExtra("ID",0);
 
-        mRealm.executeTransaction(new RealmDateDisplayTransaction(rid) {
+        Realm.getDefaultInstance().executeTransaction(new RealmDateDisplayTransaction(rid) {
         });
 
         //Spinnerで選択した際の実装
@@ -88,7 +81,7 @@ public class ScheduleActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        mRealm.executeTransaction(new Realm.Transaction() {
+                        Realm.getDefaultInstance().executeTransaction(new Realm.Transaction() {
                             @Override
                             public void execute(Realm realm) {
                                 Schedule schedule = realm.where(Schedule.class).equalTo("id", rid)
@@ -109,7 +102,6 @@ public class ScheduleActivity extends AppCompatActivity {
                             }
 
                         });
-                        mRealm.close();
                     }
                 }
         );

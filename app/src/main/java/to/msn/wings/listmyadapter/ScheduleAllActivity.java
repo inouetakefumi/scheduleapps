@@ -23,7 +23,6 @@ import io.realm.RealmResults;
 
 public class ScheduleAllActivity extends AppCompatActivity {
 
-    private Realm sRealm;
 
 
 
@@ -34,13 +33,6 @@ public class ScheduleAllActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        RealmConfiguration config = new RealmConfiguration.Builder()
-                .name("schedule.realm")
-                .schemaVersion(1)
-                .build();
-
-        sRealm = Realm.getInstance(config);
 
         Intent i = getIntent();
         final String name = i.getStringExtra("Name");
@@ -53,7 +45,7 @@ public class ScheduleAllActivity extends AppCompatActivity {
         today.set(Calendar.MILLISECOND, 0);
         // today は　今日の日付の0時0分0.000秒
         Date todayDate = today.getTime();
-        RealmResults<Schedule> result = sRealm.where(Schedule.class)
+        RealmResults<Schedule> result = Realm.getDefaultInstance().where(Schedule.class)
                 .greaterThanOrEqualTo("date", todayDate)
                 .equalTo("name", name)
                 .findAll();
@@ -104,7 +96,7 @@ public class ScheduleAllActivity extends AppCompatActivity {
         today.set(Calendar.MILLISECOND, 0);
         // today は　今日の日付の0時0分0.000秒
         Date todayDate = today.getTime();
-        RealmResults<Schedule> result = sRealm.where(Schedule.class)
+        RealmResults<Schedule> result = Realm.getDefaultInstance().where(Schedule.class)
                 .greaterThanOrEqualTo("date", todayDate)
                 .findAll();
         ArrayList<Schedule> data = new ArrayList<>();

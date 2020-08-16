@@ -16,19 +16,12 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import io.realm.Realm;
-import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 
 import android.widget.AdapterView;
 
-import java.util.Date;
-import java.util.Calendar;
-
 public class MainActivity extends AppCompatActivity {
 
-
-    private Realm pRealm;
-    private Realm sRealm;
     private ListView list;
 
     @Override
@@ -39,24 +32,15 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        RealmConfiguration profile = new RealmConfiguration.Builder()
-                .name("profile.realm")
-                .schemaVersion(4)
-                .build();
-
-        pRealm.deleteRealm(profile);
-
-        RealmConfiguration config = new RealmConfiguration.Builder()
-                .name("schedule.realm")
-                .schemaVersion(1)
-                .build();
-
-        sRealm.deleteRealm(config);
-
-        pRealm = Realm.getInstance(profile);
+        Realm.getDefaultInstance().executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.deleteAll();
+            }
+        });
 
         //adapterにprofileDBを登録
-        RealmResults<Profile> profileresult = pRealm.where(Profile.class)
+        RealmResults<Profile> profileresult = Realm.getDefaultInstance().where(Profile.class)
                 .findAll();
         ArrayList<Profile> data = new ArrayList<>();
 
@@ -127,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        RealmResults<Profile> profileresult = pRealm.where(Profile.class)
+        RealmResults<Profile> profileresult = Realm.getDefaultInstance().where(Profile.class)
                 .findAll();
         ArrayList<Profile> data = new ArrayList<>();
         for (int i = 0; i < 100; i++) {
@@ -139,8 +123,4 @@ public class MainActivity extends AppCompatActivity {
         ListView list = findViewById(R.id.list);
         list.setAdapter(adapter);
     }
-
-
-
-
 }

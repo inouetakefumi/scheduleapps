@@ -6,4 +6,9 @@
         android:id="@+id/action_add"
         android:title="@string/action_add"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/outlook_login"
+        android:title="Outlookログイン"
+        app:showAsAction="ifRoom" />
+
 </menu>

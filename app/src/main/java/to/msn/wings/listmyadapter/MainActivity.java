@@ -9,6 +9,9 @@ import android.os.Bundle;
 import android.widget.ListView;
 import android.support.v7.widget.Toolbar;
 
+import android.net.Uri;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 import java.util.ArrayList;
 
@@ -78,8 +81,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
     }
 
     @Override
@@ -95,8 +96,32 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, ProfileAddActivity.class);
                 startActivity(intent);
                 break;
+
+            case R.id.outlook_login:
+                login();
+
         }
         return true;
+    }
+
+    private void login() {
+        String url = new StringBuilder()
+                .append(getString(R.string.authorize_url))
+                .append("?client_id=").append(getString(R.string.client_id))
+                .append("&redirect_uri=").append(getString(R.string.redirect_uri))
+                .append("&response_type=code&scope=Calendars.Read")
+                .toString();
+        String encodedUrl = null;
+        try {
+            encodedUrl = URLEncoder.encode(url, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        if (encodedUrl == null)
+            return;
+        Uri uri = Uri.parse(url);
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        startActivity(intent);
     }
 
     protected void onResume() {

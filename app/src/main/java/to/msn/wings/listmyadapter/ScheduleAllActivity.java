@@ -55,7 +55,7 @@ public class ScheduleAllActivity extends AppCompatActivity {
         Date todayDate = today.getTime();
         RealmResults<Schedule> result = sRealm.where(Schedule.class)
                 .greaterThanOrEqualTo("date", todayDate)
-                .equalTo("Name", name)
+                .equalTo("name", name)
                 .findAll();
         ArrayList<Schedule> data = new ArrayList<>();
         for (int number = 0; number < 100; number++) {

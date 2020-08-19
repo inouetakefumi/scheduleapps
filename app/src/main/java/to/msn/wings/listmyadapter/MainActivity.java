@@ -23,6 +23,7 @@ import android.widget.AdapterView;
 public class MainActivity extends AppCompatActivity {
 
     private ListView list;
+    private String code = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +66,8 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        getCode();
     }
 
     @Override
@@ -106,6 +109,16 @@ public class MainActivity extends AppCompatActivity {
         Uri uri = Uri.parse(url);
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         startActivity(intent);
+    }
+
+    private void getCode() {
+        Uri uri = getIntent().getData();
+        if (uri == null) {
+            code = null;
+            return;
+        }
+        String tempCode = uri.getQueryParameter("code");
+        code = tempCode == null || tempCode.isEmpty() ? null : tempCode;
     }
 
     protected void onResume() {

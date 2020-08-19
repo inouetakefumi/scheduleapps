@@ -89,6 +89,9 @@ public class ScheduleAllActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+        Intent i = getIntent();
+        final String name = i.getStringExtra("Name");
+
         Calendar today = Calendar.getInstance();
         today.set(Calendar.HOUR_OF_DAY, 0);
         today.set(Calendar.MINUTE, 0);
@@ -98,10 +101,11 @@ public class ScheduleAllActivity extends AppCompatActivity {
         Date todayDate = today.getTime();
         RealmResults<Schedule> result = Realm.getDefaultInstance().where(Schedule.class)
                 .greaterThanOrEqualTo("date", todayDate)
+                .equalTo("name", name)
                 .findAll();
         ArrayList<Schedule> data = new ArrayList<>();
-        for (int i = 0; i < 100; i++) {
-            data.add(result.get(i));
+        for (int number = 0; number < 100; number++) {
+            data.add(result.get(number));
         }
         MyListAdapter adapter = new MyListAdapter(this, data, R.layout.list_item);
         ListView list = findViewById(R.id.list);

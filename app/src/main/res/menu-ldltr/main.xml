@@ -8,7 +8,7 @@
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/outlook_login"
-        android:title="Outlookログイン"
+        android:title="Outlook同期"
         app:showAsAction="ifRoom" />
 
 </menu>

@@ -28,13 +28,14 @@
 
     <string name="action_cansel">戻る</string>
     <string name="action_add">メンバー追加</string>
-    <string name="outlook_login">Outlookログイン</string>
+    <string name="outlook_login">Outlook同期</string>
 
     <string name="authorize_url">https://login.microsoftonline.com/common/oauth2/v2.0/authorize</string>
     <string name="access_token_url">https://login.microsoftonline.com/common/oauth2/v2.0/token</string>
     <string name="calendars_url">https://graph.microsoft.com/v2.0/me/calendars</string>
+    <string name="events_url">https://graph.microsoft.com/v1.0/me/events?$select=subject,body,bodyPreview,organizer,attendees,start,end,location</string>
 
-    <string name="client_id">7df61284-6cfc-4348-a758-a9e2b1fe1e75</string>
+    <string name="client_id">87470534-aa63-4f3b-9b87-5625a164ca53</string>
     <string name="redirect_uri">https://scheduleapp/auth</string>
-    <string name="client_secret">-~8WQV~LtmxHp9BZ_CqNtRR3qw7f8xLW_5</string>
+    <string name="client_secret">rDqT-G.oE56K1s01D_aJ~c0-Vdx1KnOs.B</string>
 </resources>

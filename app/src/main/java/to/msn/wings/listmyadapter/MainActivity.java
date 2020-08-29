@@ -23,7 +23,7 @@ import android.widget.AdapterView;
 public class MainActivity extends AppCompatActivity {
 
     private ListView list;
-    private String code = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        getCode();
+
     }
 
     @Override
@@ -90,35 +90,6 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    private void login() {
-        String url = new StringBuilder()
-                .append(getString(R.string.authorize_url))
-                .append("?client_id=").append(getString(R.string.client_id))
-                .append("&redirect_uri=").append(getString(R.string.redirect_uri))
-                .append("&response_type=code&scope=Calendars.Read")
-                .toString();
-        String encodedUrl = null;
-        try {
-            encodedUrl = URLEncoder.encode(url, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        if (encodedUrl == null)
-            return;
-        Uri uri = Uri.parse(url);
-        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-        startActivity(intent);
-    }
-
-    private void getCode() {
-        Uri uri = getIntent().getData();
-        if (uri == null) {
-            code = null;
-            return;
-        }
-        String tempCode = uri.getQueryParameter("code");
-        code = tempCode == null || tempCode.isEmpty() ? null : tempCode;
-    }
 
     protected void onResume() {
         super.onResume();

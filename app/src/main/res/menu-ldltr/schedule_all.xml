@@ -3,10 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/outlook_login"
+        android:title="同期"
+        app:showAsAction="ifRoom" />
+
+    <item
         android:id="@+id/action_cansel"
         android:title="@string/action_cansel"
         app:showAsAction="ifRoom" />
-
-
-
 </menu>

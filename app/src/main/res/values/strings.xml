@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">予定表アプリ</string>
     <string name="work_text">勤怠</string>
-    <string name="detail_text">タスクメモ</string>
+    <string name="detail_text">メモ</string>
     <string name="input_text">登録</string>
     <string name="cancel_text">キャンセル</string>
 

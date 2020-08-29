@@ -19,9 +19,9 @@
         <item>第五システム担当</item>
     </string-array>
 
-    <string name="name_text">姓名</string>
-    <string name="kana_text">カナ</string>
-    <string name="phonenumber_text">電話番号</string>
+    <string name="name_text">姓名(漢字)</string>
+    <string name="kana_text">姓名(カナ)</string>
+    <string name="phonenumber_text">電話番号\n(ハイフンなし)</string>
     <string name="mail_text">メールアドレス</string>
     <string name="part_text">担当</string>
     <string name="schedulebottuon">スケジュール</string>

@@ -4,6 +4,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import android.content.Intent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import android.view.View;
@@ -108,18 +110,22 @@ public class ScheduleActivity extends AppCompatActivity {
 
 
 
-        //キャンセルボタンを押下したの実装
-        Button cancel = findViewById(R.id.cancel);
-        cancel.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        finish();
 
-                    }
-                }
-        );
+    }
 
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.schedule, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_cansel:
+                finish();
+                break;
+        }
+        return true;
     }
 
     class RealmDateDisplayTransaction implements Realm.Transaction {

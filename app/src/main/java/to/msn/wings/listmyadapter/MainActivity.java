@@ -84,8 +84,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
 
-            case R.id.outlook_login:
-                login();
+
 
         }
         return true;

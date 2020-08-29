@@ -6,9 +6,5 @@
         android:id="@+id/action_add"
         android:title="@string/action_add"
         app:showAsAction="ifRoom" />
-    <item
-        android:id="@+id/outlook_login"
-        android:title="Outlook同期"
-        app:showAsAction="ifRoom" />
 
 </menu>

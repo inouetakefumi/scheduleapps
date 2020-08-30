@@ -11,6 +11,16 @@ import android.view.View;
 import android.widget.TextView;
 
 
+import com.google.gson.Gson;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -22,6 +32,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.jetbrains.annotations.NotNull;
 
 public class ApiActivity extends AppCompatActivity {
 
@@ -40,6 +51,15 @@ public class ApiActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        findViewById(R.id.getAccessTokenButton).setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        getAccessToken();
+                    }
+                }
+        );
         getCode();
         updateView();
 
@@ -62,6 +82,38 @@ public class ApiActivity extends AppCompatActivity {
         code = tempCode == null || tempCode.isEmpty() ? null : tempCode;
     }
 
+    private void getAccessToken() {
+        HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
+        httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(httpLoggingInterceptor).build();
+        RequestBody requestBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("grant_type", "authorization_code")
+                .addFormDataPart("code", code)
+                .addFormDataPart("redirect_uri", getString(R.string.redirect_uri))
+                .addFormDataPart("client_id", getString(R.string.client_id))
+                .addFormDataPart("client_secret", getString(R.string.client_secret))
+                .build();
+        Request request = new Request.Builder()
+                .url(getString(R.string.access_token_url))
+                .post(requestBody)
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                String result = response.body().string();
+                Gson gson = new Gson();
+                AccesstokenResponse accesstokenResponse = gson.fromJson(result, AccesstokenResponse.class);
+                accessToken = accesstokenResponse.getAccessToken();
+
+            }
+        });
+    }
     private void updateView() {
         ((TextView) findViewById(R.id.codeTextView)).setText(new StringBuilder().append("code:\n").append(code));
         ((TextView) findViewById(R.id.accessTokenTextView)).setText(new StringBuilder().append("accessToken:\n").append(accessToken));

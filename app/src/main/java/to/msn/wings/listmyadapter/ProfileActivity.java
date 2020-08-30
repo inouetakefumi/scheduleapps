@@ -105,7 +105,7 @@ public class ProfileActivity extends AppCompatActivity {
                     new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Intent intent = new Intent(ProfileActivity.this, ApiActivity.class);
+                            Intent intent = new Intent(ProfileActivity.this, loginActivity.class);
                             intent.putExtra("Name",name);
                             intent.putExtra("ID",rid);
                             startActivity(intent);

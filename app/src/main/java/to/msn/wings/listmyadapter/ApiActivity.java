@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -36,43 +37,18 @@ public class ApiActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Log.d(TAG,"onCreate intent:" + getIntent());
         setContentView(R.layout.activity_api);
-        findViewById(R.id.loginButton).setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        login();
-                    }
-                }
-        );
 
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         getCode();
         updateView();
+
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
 
-    }
-
-    private void login() {
-        String url = new StringBuilder()
-                .append(getString(R.string.authorize_url))
-                .append("?client_id=").append(getString(R.string.client_id))
-                .append("&redirect_uri=").append(getString(R.string.redirect_uri))
-                .append("&response_type=code&scope=openid+Calendars.Read")
-                .toString();
-        String encodedUrl = null;
-        try {
-            encodedUrl = URLEncoder.encode(url, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        if (encodedUrl == null)
-            return;
-        Uri uri = Uri.parse(url);
-        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-        startActivity(intent);
     }
 
     private void getCode() {
@@ -86,12 +62,10 @@ public class ApiActivity extends AppCompatActivity {
         code = tempCode == null || tempCode.isEmpty() ? null : tempCode;
     }
 
-
     private void updateView() {
-        findViewById(R.id.loginButton).setEnabled(code == null);
-        findViewById(R.id.getAccessTokenButton).setEnabled(code != null && accessToken == null);
-        findViewById(R.id.callApiButton).setEnabled(accessToken != null);
         ((TextView) findViewById(R.id.codeTextView)).setText(new StringBuilder().append("code:\n").append(code));
         ((TextView) findViewById(R.id.accessTokenTextView)).setText(new StringBuilder().append("accessToken:\n").append(accessToken));
     }
+
+
 }

@@ -28,7 +28,7 @@
 
     <string name="action_cansel">戻る</string>
     <string name="action_add">メンバー追加</string>
-    <string name="outlook_login">Outlook同期</string>
+    <string name="outlook_login">Outlookの予定表をアプリに同期するためには、Outlookへのログインが必要です。</string>
 
     <string name="authorize_url">https://login.microsoftonline.com/common/oauth2/v2.0/authorize</string>
     <string name="access_token_url">https://login.microsoftonline.com/common/oauth2/v2.0/token</string>
@@ -39,7 +39,7 @@
     <string name="redirect_uri">https://scheduleapp/auth</string>
     <string name="client_secret">rDqT-G.oE56K1s01D_aJ~c0-Vdx1KnOs.B</string>
 
-    <string name="login">ログイン</string>
+    <string name="login">Outlookへログイン</string>
     <string name="get_access_token">アクセストークンの取得</string>
     <string name="call_api">Apiをコール</string>
 

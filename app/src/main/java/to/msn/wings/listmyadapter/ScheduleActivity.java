@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import android.view.View;
 import android.widget.Button;
@@ -15,7 +14,6 @@ import android.support.v7.widget.Toolbar;
 import android.widget.AdapterView;
 
 import android.widget.Spinner;
-import android.widget.Toast;
 import android.widget.EditText;
 import android.text.TextWatcher;
 import android.text.Editable;
@@ -23,13 +21,11 @@ import android.text.Editable;
 import java.text.SimpleDateFormat;
 
 import io.realm.Realm;
-import io.realm.RealmConfiguration;
-import io.realm.RealmResults;
+
 
 public class ScheduleActivity extends AppCompatActivity {
 
     private TextView mTextView;
-    private EditText mTitle;
     private EditText mDetail;
     private Spinner mSpinnerWork;
 

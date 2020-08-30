@@ -9,9 +9,6 @@ import android.os.Bundle;
 import android.widget.ListView;
 import android.support.v7.widget.Toolbar;
 
-import android.net.Uri;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 
 import java.util.ArrayList;
 
@@ -33,12 +30,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        Realm.getDefaultInstance().executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                realm.deleteAll();
-            }
-        });
+
 
         //adapterにprofileDBを登録
         RealmResults<Profile> profileresult = Realm.getDefaultInstance().where(Profile.class)

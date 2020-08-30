@@ -20,7 +20,6 @@ import java.util.Date;
 import java.util.Calendar;
 
 import io.realm.Realm;
-import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 
 

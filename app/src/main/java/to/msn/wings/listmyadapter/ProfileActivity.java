@@ -3,6 +3,8 @@ package to.msn.wings.listmyadapter;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -39,6 +41,22 @@ public class ProfileActivity extends AppCompatActivity {
 
         Realm.getDefaultInstance().executeTransaction(new ProfileActivity.RealmProfileDisplayTransaction(name,rid) {
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.profile, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_cansel:
+                finish();
+                break;
+        }
+        return true;
     }
 
     class RealmProfileDisplayTransaction implements Realm.Transaction {
@@ -81,16 +99,22 @@ public class ProfileActivity extends AppCompatActivity {
                     }
             );
 
-            Button cancel = findViewById(R.id.cancel);
-            cancel.setOnClickListener(
+            Button outlook = findViewById(R.id.outlook);
+
+            outlook.setOnClickListener(
                     new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            finish();
-
+                            Intent intent = new Intent(ProfileActivity.this, ApiActivity.class);
+                            intent.putExtra("Name",name);
+                            intent.putExtra("ID",rid);
+                            startActivity(intent);
                         }
                     }
             );
+
+
+
         }
     }
 }

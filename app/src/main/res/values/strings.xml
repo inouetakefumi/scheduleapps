@@ -38,4 +38,10 @@
     <string name="client_id">87470534-aa63-4f3b-9b87-5625a164ca53</string>
     <string name="redirect_uri">https://scheduleapp/auth</string>
     <string name="client_secret">rDqT-G.oE56K1s01D_aJ~c0-Vdx1KnOs.B</string>
+
+    <string name="login">ログイン</string>
+    <string name="get_access_token">アクセストークンの取得</string>
+    <string name="call_api">Apiをコール</string>
+
+    <string name="error_message">エラーが発生しました。\n%1$s</string>
 </resources>

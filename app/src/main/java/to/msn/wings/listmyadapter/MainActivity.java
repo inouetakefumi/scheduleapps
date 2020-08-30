@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ProfileAdapter adapter = (ProfileAdapter) parent.getAdapter();
                 Profile profile = (Profile) adapter.getItem(position);
-                Intent intent = new Intent(MainActivity.this, ScheduleAllActivity.class);
+                Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
                 intent.putExtra("Name",profile.getName());
                 intent.putExtra("ID",profile.getId());
                 startActivity(intent);
